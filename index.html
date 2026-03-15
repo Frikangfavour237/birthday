@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday Sheki❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#C0272D;--red-deep:#8B1A1E;--red-lt:#F2C0C2;
+  --red-pale:#FDF0F0;--white:#FFFFFF;--ink:#2B1B1B;--ink2:#7A4444;
+}
+html,body{height:100%}
+body{font-family:'Nunito',sans-serif;background:var(--white);color:var(--ink);overflow-x:hidden}
+
+/* FLOATING HEARTS */
+#hearts-layer{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fh{position:absolute;bottom:-60px;animation:floatHeart linear infinite;opacity:0}
+.fh svg{fill:var(--red)}
+@keyframes floatHeart{
+  0%{transform:translateY(0) rotate(-10deg) scale(1);opacity:0}
+  10%{opacity:0.13}90%{opacity:0.08}
+  100%{transform:translateY(-110vh) rotate(15deg) scale(0.7);opacity:0}
+}
+.static-hearts{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.sh{position:absolute;opacity:0.08}
+.sh svg{fill:var(--red)}
+
+/* PAGE SYSTEM */
+.page{display:none;min-height:100vh;position:relative;z-index:1;background:var(--white)}
+.page.active{display:flex;flex-direction:column}
+.page-enter{animation:pgIn 0.5s cubic-bezier(0.22,1,0.36,1) forwards}
+@keyframes pgIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* REVEAL */
+[data-reveal]{opacity:0;transform:translateY(28px);transition:opacity 1s cubic-bezier(0.22,1,0.36,1),transform 1s cubic-bezier(0.22,1,0.36,1)}
+[data-reveal].revealed{opacity:1;transform:translateY(0)}
+
+/* CARD PAGES (welcome, no-thanks) */
+.card-page{align-items:center;justify-content:center;padding:32px 16px}
+.card{
+  background:var(--white);border:2.5px solid var(--red);border-radius:20px;
+  padding:44px 36px;max-width:460px;width:100%;text-align:center;
+  position:relative;box-shadow:0 8px 36px rgba(192,39,45,0.12);z-index:1;
+}
+.hc{position:absolute;width:22px;height:22px;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 20 18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z' fill='%23C0272D'/%3E%3C/svg%3E") center/contain no-repeat}
+.hc.tl{top:-11px;left:-11px}.hc.tr{top:-11px;right:-11px}
+.hc.bl{bottom:-11px;left:-11px}.hc.br{bottom:-11px;right:-11px}
+
+/* FRAME PAGES (all inner pages) */
+.frame-page{min-height:100vh;padding:20px}
+.frame-box{
+  flex:1;border:2.5px dashed var(--red);border-radius:18px;
+  position:relative;display:flex;flex-direction:column;
+  min-height:calc(100vh - 40px);overflow:hidden;
+}
+.frame-box .hc{z-index:2}
+.frame-content{
+  flex:1;padding:28px 24px 12px;overflow-y:auto;
+  display:flex;flex-direction:column;align-items:center;
+}
+.frame-footer{
+  border-top:2px dashed var(--red-lt);padding:14px 24px 20px;
+  text-align:center;background:var(--white);flex-shrink:0;
+}
+.frame-title{
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(2rem,7vw,3rem);
+  color:var(--red);line-height:1.1;display:block;margin-bottom:10px;
+}
+.return-btn{
+  display:inline-block;padding:7px 26px;
+  border:2px solid var(--red);border-radius:50px;
+  font-family:'Nunito',sans-serif;font-size:0.72rem;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;
+  cursor:pointer;transition:all 0.22s ease;background:transparent;color:var(--red);
+}
+.return-btn:hover,.return-btn:active{background:var(--red);color:white}
+
+/* BUTTONS */
+.btn{
+  display:inline-block;padding:12px 28px;border:2px solid var(--red);border-radius:50px;
+  font-family:'Nunito',sans-serif;font-size:0.8rem;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;
+  transition:all 0.22s ease;background:transparent;color:var(--red);text-decoration:none;
+}
+.btn:hover,.btn:active{background:var(--red);color:white;transform:translateY(-2px);box-shadow:0 6px 18px rgba(192,39,45,0.28)}
+.btn-solid{background:var(--red);color:white}
+.btn-solid:hover,.btn-solid:active{background:var(--red-deep);border-color:var(--red-deep)}
+
+/* HEARTS ROW */
+.hearts-row{display:flex;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.hearts-row svg{fill:var(--red);opacity:0.75;animation:pulse 2s ease-in-out infinite}
+.hearts-row svg:nth-child(2){animation-delay:0.3s}.hearts-row svg:nth-child(3){animation-delay:0.6s}
+.hearts-row svg:nth-child(4){animation-delay:0.2s}.hearts-row svg:nth-child(5){animation-delay:0.5s}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+
+/* SPARKLE */
+.sparkle{position:fixed;pointer-events:none;z-index:9999;animation:sparkOff 1s ease forwards}
+@keyframes sparkOff{0%{opacity:1;transform:scale(1) translateY(0)}100%{opacity:0;transform:scale(0.1) translateY(-70px)}}
+
+/* PAGE 1 WELCOME */
+.bear-wrap{width:100px;height:110px;margin:0 auto 16px;display:block}
+@keyframes bearBounce{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  20%{transform:translateY(-9px) rotate(-4deg)}
+  40%{transform:translateY(-4px) rotate(3deg)}
+  60%{transform:translateY(-11px) rotate(-3deg)}
+  80%{transform:translateY(-5px) rotate(4deg)}
+}
+@keyframes bearArm{0%,100%{transform:rotate(0deg)}30%{transform:rotate(28deg)}60%{transform:rotate(-22deg)}}
+@keyframes bearArmR{0%,100%{transform:rotate(0deg)}30%{transform:rotate(-28deg)}60%{transform:rotate(22deg)}}
+.bear-body{animation:bearBounce 1.7s ease-in-out infinite}
+.bear-arm-l{animation:bearArm 1.7s ease-in-out infinite;transform-origin:38px 78px}
+.bear-arm-r{animation:bearArmR 1.7s ease-in-out infinite;transform-origin:62px 78px}
+#page-welcome h1{font-family:'Dancing Script',cursive;font-size:clamp(2rem,8vw,3.2rem);color:var(--red);line-height:1.1;margin-bottom:4px}
+#page-welcome h1 span{display:block;color:var(--red-deep);font-size:clamp(1.7rem,7vw,2.6rem)}
+.welcome-q{font-size:0.82rem;color:var(--ink2);margin:8px 0 26px;letter-spacing:0.05em}
+.wbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* PAGE 2 NO THANKS */
+#page-no h2{font-family:'Dancing Script',cursive;font-size:clamp(1.8rem,7vw,2.4rem);color:var(--red);margin-bottom:10px}
+#page-no p{font-size:0.9rem;color:var(--ink2);line-height:1.7;margin-bottom:22px}
+
+/* PAGE 3 MENU */
+.menu-top{text-align:center;margin-bottom:24px;width:100%}
+.menu-top h2{font-family:'Dancing Script',cursive;font-size:clamp(2rem,7vw,2.8rem);color:var(--red);margin-bottom:4px}
+.menu-top p{font-size:0.82rem;color:var(--ink2);letter-spacing:0.06em}
+.mgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:500px;width:100%}
+.mc{
+  background:var(--white);border:2px solid var(--red);border-radius:16px;
+  padding:22px 14px;cursor:pointer;transition:all 0.22s ease;
+  text-align:center;position:relative;overflow:hidden;
+}
+.mc::after{content:'';position:absolute;inset:0;background:var(--red-pale);opacity:0;transition:opacity 0.2s}
+.mc:hover::after,.mc:active::after{opacity:1}
+.mc:hover,.mc:active{transform:translateY(-4px);box-shadow:0 8px 24px rgba(192,39,45,0.18)}
+.mc svg{position:relative;z-index:1;margin-bottom:10px}
+.mc .ml{font-family:'Dancing Script',cursive;font-size:1.35rem;color:var(--red);display:block;position:relative;z-index:1}
+.mc .ms{font-size:0.7rem;color:var(--ink2);letter-spacing:0.06em;margin-top:2px;position:relative;z-index:1}
+.mc.full{grid-column:1/-1;max-width:220px;justify-self:center;width:100%}
+
+/* PAGE 4 MEMORIES */
+.polaroid-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:24px;justify-items:center;margin-top:40px;width:100%;
+}
+.polaroid{
+  background:white;padding:12px;border-radius:6px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.1);
+  transition:all 0.35s ease;cursor:pointer;
+}
+.pol-img{width:100%;aspect-ratio:1;overflow:hidden;position:relative}
+.pol-img img{width:100%;height:100%;object-fit:cover}
+.pol-label{font-family:'Dancing Script',cursive;font-size:0.9rem;color:var(--red);text-align:center;margin-top:6px}
+.polaroid:nth-child(1){transform:rotate(-10deg) translateY(15px)}
+.polaroid:nth-child(2){transform:rotate(8deg) translateY(-20px)}
+.polaroid:nth-child(3){transform:rotate(-7deg) translateY(25px)}
+.polaroid:nth-child(4){transform:rotate(12deg) translateY(-10px)}
+.polaroid:nth-child(5){transform:rotate(-9deg) translateY(18px)}
+.polaroid:nth-child(6){transform:rotate(10deg) translateY(-22px)}
+.polaroid:nth-child(7){transform:rotate(-8deg) translateY(20px)}
+.polaroid:nth-child(8){transform:rotate(9deg) translateY(-15px)}
+.polaroid:nth-child(9){transform:rotate(-6deg) translateY(25px)}
+.polaroid:nth-child(10){transform:rotate(11deg) translateY(-18px)}
+.polaroid:hover,.polaroid:active{transform:rotate(0deg) scale(1.1)!important;z-index:10;box-shadow:0 14px 36px rgba(192,39,45,0.18)}
+.photo-hint{font-size:0.72rem;color:var(--ink2);font-style:italic;text-align:center;margin-top:6px;opacity:0.7}
+
+/* PAGE 5 REASONS */
+.rlist{display:flex;flex-direction:column;gap:10px;width:100%;max-width:520px}
+.ritem{
+  display:flex;align-items:flex-start;gap:12px;background:var(--white);
+  border:1.5px solid var(--red-lt);border-radius:14px;padding:16px 18px;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.ritem:hover{border-color:var(--red);box-shadow:0 4px 14px rgba(192,39,45,0.1)}
+.ritem svg{fill:var(--red);flex-shrink:0;margin-top:3px}
+.ritem p{font-size:0.9rem;color:var(--ink);line-height:1.65}
+
+/* PAGE 6 SONG */
+.song-card{
+  background:var(--white);border:2px solid var(--red);border-radius:18px;padding:24px;
+  box-shadow:0 4px 24px rgba(192,39,45,0.1);width:100%;max-width:520px;position:relative;
+}
+.seyebrow{font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--red);margin-bottom:6px;display:block}
+.sname{font-family:'Dancing Script',cursive;font-size:1.7rem;color:var(--ink);margin-bottom:14px}
+.shint{font-size:0.72rem;color:var(--ink2);font-style:italic;margin-bottom:12px;line-height:1.6}
+.yt{width:100%;aspect-ratio:16/9;border:none;border-radius:10px;display:block}
+.sec-btn{
+  display:inline-flex;align-items:center;gap:8px;margin-top:16px;
+  background:none;border:none;font-family:'Dancing Script',cursive;font-size:1.1rem;
+  color:var(--red);cursor:pointer;transition:opacity 0.2s;
+}
+.sec-btn:hover{opacity:0.7}
+.sec-btn svg{fill:var(--red);transition:transform 0.3s}
+.sec-btn.open .arr{transform:rotate(180deg)}
+.sec-body{
+  display:none;background:var(--red-pale);border-left:2px solid var(--red-lt);
+  border-radius:0 10px 10px 10px;padding:14px 16px;margin-top:8px;
+  font-size:0.88rem;font-style:italic;color:var(--ink);line-height:1.8;text-align:left;
+}
+
+/* PAGE 7 MESSAGE */
+.letter{
+  background:var(--white);border:2px solid var(--red);border-radius:18px;
+  padding:36px 32px;box-shadow:0 4px 32px rgba(192,39,45,0.1);
+  position:relative;text-align:left;width:100%;max-width:520px;
+}
+.letter::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:repeating-linear-gradient(90deg,var(--red) 0,var(--red) 10px,transparent 10px,transparent 18px);
+  border-radius:18px 18px 0 0;opacity:0.5;
+}
+.letter::after{
+  content:'';position:absolute;bottom:20px;right:20px;width:55px;height:55px;opacity:0.05;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 20 18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z' fill='%23C0272D'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.ldear{font-family:'Dancing Script',cursive;font-size:1.1rem;color:var(--ink2);margin-bottom:16px;display:block}
+.lbody{font-size:0.92rem;line-height:1.95;color:var(--ink);white-space:pre-line}
+.lfrom{font-family:'Dancing Script',cursive;font-size:1.35rem;color:var(--red);margin-top:20px;display:block}
+
+/* PAGE 8 FLOWERS */
+.flower-layout{display:grid;grid-template-columns:1fr auto 1fr;gap:0 12px;align-items:center;width:100%;max-width:680px}
+.flower-center-col{display:flex;flex-direction:column;align-items:center;gap:6px}
+.flower-big-svg{width:150px;height:190px;flex-shrink:0}
+.flower-name-big{font-family:'Dancing Script',cursive;font-size:1.5rem;color:var(--red);text-align:center;line-height:1.1}
+.flower-caption{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink2);text-align:center}
+.flower-notes-left,.flower-notes-right{display:flex;flex-direction:column;gap:10px}
+.flower-note{
+  background:var(--white);border:1.5px solid var(--red-lt);border-radius:12px;
+  padding:11px 13px;font-size:0.76rem;color:var(--ink);line-height:1.6;
+  box-shadow:0 2px 8px rgba(192,39,45,0.06);position:relative;
+}
+.flower-notes-left .flower-note{border-left:2.5px solid var(--red)}
+.flower-notes-right .flower-note{border-right:2.5px solid var(--red)}
+.flower-note strong{display:block;font-family:'Dancing Script',cursive;font-size:1rem;color:var(--red);margin-bottom:2px}
+.flower-note::after{content:'';position:absolute;top:50%;width:7px;height:7px;border-radius:50%;background:var(--red-lt);transform:translateY(-50%)}
+.flower-notes-left .flower-note::after{right:-10px}
+.flower-notes-right .flower-note::after{left:-10px}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:600px){
+  /* frame */
+  .frame-page{padding:12px}
+  .frame-box{min-height:calc(100vh - 24px);border-radius:14px}
+  .frame-content{padding:16px 12px 8px}
+  .frame-footer{padding:10px 14px 16px}
+  .frame-title{font-size:clamp(1.6rem,8vw,2.4rem)}
+  /* menu icons smaller */
+  .mc svg{width:56px;height:56px}
+  .mc .ml{font-size:1.15rem}
+  /* polaroids 2-col on tablet */
+  .polaroid-grid{grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px}
+  /* flowers stack */
+  .flower-layout{grid-template-columns:1fr;justify-items:center;gap:12px}
+  .flower-notes-left,.flower-notes-right{flex-direction:row;flex-wrap:wrap;justify-content:center;width:100%}
+  .flower-note{flex:1 1 42%;}.flower-note::after{display:none}
+  .flower-big-svg{width:120px;height:152px}
+}
+
+@media(max-width:420px){
+  /* card pages */
+  .card-page{padding:20px 12px}
+  .card{padding:28px 16px;border-radius:16px}
+  .bear-wrap{width:82px;height:90px}
+  .hc{width:16px;height:16px}
+  .hc.tl{top:-8px;left:-8px}.hc.tr{top:-8px;right:-8px}
+  .hc.bl{bottom:-8px;left:-8px}.hc.br{bottom:-8px;right:-8px}
+  /* frame */
+  .frame-page{padding:8px}
+  .frame-box{min-height:calc(100vh - 16px);border-radius:12px}
+  .frame-content{padding:12px 10px 6px}
+  .frame-footer{padding:8px 10px 14px}
+  /* menu */
+  .mgrid{gap:9px}
+  .mc{padding:14px 8px;border-radius:12px}
+  .mc svg{width:44px;height:44px}
+  .mc .ml{font-size:1rem}
+  .mc .ms{font-size:0.6rem}
+  /* polaroids */
+  .polaroid-grid{grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+  .pol-label{font-size:0.75rem}
+  /* reasons */
+  .ritem{padding:11px 12px}
+  .ritem p{font-size:0.82rem}
+  /* song */
+  .song-card{padding:16px}
+  .sname{font-size:1.4rem}
+  /* letter */
+  .letter{padding:24px 16px}
+  .lbody{font-size:0.86rem}
+  /* flowers */
+  .flower-note{flex:1 1 100%;font-size:0.72rem;padding:9px 11px}
+  .flower-big-svg{width:100px;height:126px}
+}
+</style>
+</head>
+<body>
+<div id="hearts-layer"></div>
+
+<!-- PAGE 1 WELCOME -->
+<div class="page card-page active" id="page-welcome">
+  <div class="static-hearts" id="sh-welcome"></div>
+  <div class="card">
+    <div class="hc tl"></div><div class="hc tr"></div><div class="hc bl"></div><div class="hc br"></div>
+    <svg class="bear-wrap" data-reveal viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g class="bear-body">
+        <circle cx="28" cy="24" r="13" fill="#fde8e8" stroke="#C0272D" stroke-width="1.5"/>
+        <circle cx="28" cy="24" r="7" fill="#f5c0c0"/>
+        <circle cx="72" cy="24" r="13" fill="#fde8e8" stroke="#C0272D" stroke-width="1.5"/>
+        <circle cx="72" cy="24" r="7" fill="#f5c0c0"/>
+        <ellipse cx="50" cy="78" rx="26" ry="28" fill="#fde8e8" stroke="#C0272D" stroke-width="1.5"/>
+        <ellipse cx="50" cy="82" rx="15" ry="16" fill="#f9d4d6" opacity="0.6"/>
+        <path d="M50 88 C50 88 44 83 44 79 a4 4 0 0 1 6-1.5 4 4 0 0 1 6 1.5 c0 4-6 9-6 9z" fill="#C0272D" opacity="0.5"/>
+        <circle cx="50" cy="46" r="28" fill="#fde8e8" stroke="#C0272D" stroke-width="1.5"/>
+        <ellipse cx="40" cy="42" rx="4.5" ry="5" fill="#2B1B1B"/><circle cx="41.5" cy="40" r="1.4" fill="white"/>
+        <ellipse cx="60" cy="42" rx="4.5" ry="5" fill="#2B1B1B"/><circle cx="61.5" cy="40" r="1.4" fill="white"/>
+        <ellipse cx="34" cy="52" rx="5.5" ry="3.2" fill="#f5a0a0" opacity="0.7"/>
+        <ellipse cx="66" cy="52" rx="5.5" ry="3.2" fill="#f5a0a0" opacity="0.7"/>
+        <ellipse cx="50" cy="52" rx="3" ry="2.2" fill="#C0272D"/>
+        <path d="M44 59 Q50 65 56 59" stroke="#C0272D" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <ellipse cx="38" cy="104" rx="9" ry="7" fill="#fde8e8" stroke="#C0272D" stroke-width="1.3"/>
+        <ellipse cx="62" cy="104" rx="9" ry="7" fill="#fde8e8" stroke="#C0272D" stroke-width="1.3"/>
+      </g>
+      <g class="bear-arm-l"><ellipse cx="20" cy="76" rx="10" ry="7" fill="#fde8e8" stroke="#C0272D" stroke-width="1.3" transform="rotate(-30 38 78)"/></g>
+      <g class="bear-arm-r"><ellipse cx="80" cy="76" rx="10" ry="7" fill="#fde8e8" stroke="#C0272D" stroke-width="1.3" transform="rotate(30 62 78)"/></g>
+    </svg>
+    <h1 data-reveal>Hello,<span>Sheki my love!</span></h1>
+    <p class="welcome-q" data-reveal>Do you want to see your gift?</p>
+    <div class="hearts-row" data-reveal>
+      <svg width="10" height="9" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z"/></svg>
+      <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z"/></svg>
+      <svg width="18" height="16" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z"/></svg>
+      <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z"/></svg>
+      <svg width="10" height="9" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z"/></svg>
+    </div>
+    <div class="wbtns" data-reveal>
+      <button class="btn btn-solid" onclick="goTo('page-menu');burst(event)">Yes Please</button>
+      <button class="btn" onclick="goTo('page-no')">No Thanks</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2 NO THANKS -->
+<div class="page card-page" id="page-no">
+  <div class="card">
+    <div class="hc tl"></div><div class="hc tr"></div><div class="hc bl"></div><div class="hc br"></div>
+    <svg data-reveal width="74" height="74" viewBox="0 0 82 82" fill="none" style="display:block;margin:0 auto 16px">
+      <circle cx="22" cy="22" r="13" fill="#fde8e8" stroke="#C0272D" stroke-width="1.5"/>
+      <circle cx="60" cy="22" r="13" fill="#fde8e8" stroke="#C0272D" stroke-width="1.5"/>
+      <circle cx="22" cy="22" r="7" fill="#f5c0c0"/><circle cx="60" cy="22" r="7" fill="#f5c0c0"/>
+      <circle cx="41" cy="46" r="29" fill="#fde8e8" stroke="#C0272D" stroke-width="1.5"/>
+      <ellipse cx="31" cy="42" rx="4.5" ry="5" fill="#2B1B1B"/><ellipse cx="51" cy="42" rx="4.5" ry="5" fill="#2B1B1B"/>
+      <circle cx="32.5" cy="40" r="1.4" fill="white"/><circle cx="52.5" cy="40" r="1.4" fill="white"/>
+      <ellipse cx="26" cy="50" rx="5.5" ry="3.2" fill="#f5a0a0" opacity="0.7"/>
+      <ellipse cx="56" cy="50" rx="5.5" ry="3.2" fill="#f5a0a0" opacity="0.7"/>
+      <ellipse cx="41" cy="52" rx="3" ry="2.2" fill="#C0272D"/>
+      <path d="M37 59 Q41 54 45 59" stroke="#C0272D" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <ellipse cx="30" cy="54" rx="2" ry="3" fill="#aad4f5"/>
+    </svg>
+    <h2 data-reveal>I promise you'll like it...</h2>
+    <p data-reveal>Come on, it was made with so much love just for you.</p>
+    <button data-reveal class="btn btn-solid" onclick="goTo('page-welcome');burst(event)" style="margin-top:4px">Try Again</button>
+  </div>
+</div>
+
+<!-- PAGE 3 MENU -->
+<div class="page frame-page" id="page-menu">
+  <div class="static-hearts" id="sh-menu"></div>
+  <div class="frame-box">
+    <div class="hc tl"></div><div class="hc tr"></div><div class="hc bl"></div><div class="hc br"></div>
+    <div class="frame-content">
+      <div class="menu-top" data-reveal>
+        <h2>These Are For You!</h2>
+        <p>I hope you like it ♥ I love you</p>
+        <div class="hearts-row" style="margin-top:8px">
+          <svg width="9" height="8" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+          <svg width="13" height="12" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+          <svg width="17" height="15" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+          <svg width="13" height="12" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+          <svg width="9" height="8" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        </div>
+      </div>
+      <div class="mgrid">
+        <div class="mc" data-reveal onclick="goTo('page-memories')">
+          <svg width="100" height="100" viewBox="0 0 36 36" fill="none"><rect x="3" y="5" width="30" height="24" rx="3" fill="#fde8e8" stroke="#C0272D" stroke-width="1.8"/><circle cx="12" cy="17" r="4" stroke="#C0272D" stroke-width="1.4" fill="white"/><path d="M3 26 L11 18 L17 23 L23 17 L33 25" stroke="#C0272D" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M26 9 C26 9 22 7 22 5 a2.5 2.5 0 0 1 4-0.5 2.5 2.5 0 0 1 4 0.5 c0 2-4 4-4 4z" fill="#C0272D"/></svg>
+          <span class="ml">Memories</span><span class="ms">our captured moments</span>
+        </div>
+        <div class="mc" data-reveal onclick="goTo('page-reasons')">
+          <svg width="100" height="100" viewBox="0 0 36 36" fill="none"><path d="M18 31S4 22 4 12a7 7 0 0 1 14-2 7 7 0 0 1 14 2c0 10-14 19-14 19z" fill="#fde8e8" stroke="#C0272D" stroke-width="1.8"/><path d="M18 18 C18 18 12 14 12 11 a3.5 3.5 0 0 1 6-1 3.5 3.5 0 0 1 6 1 c0 3-6 7-6 7z" fill="#C0272D" opacity="0.55"/></svg>
+          <span class="ml">Why I Love You</span><span class="ms">a few of many reasons</span>
+        </div>
+        <div class="mc" data-reveal onclick="goTo('page-flowers')">
+          <svg width="100" height="100" viewBox="0 0 36 36" fill="none"><path d="M18 32 L18 16" stroke="#7A8C72" stroke-width="2"/><circle cx="18" cy="12" r="5" stroke="#C0272D" stroke-width="1.5" fill="#fde8e8"/><circle cx="12" cy="10" r="4" stroke="#C0272D" stroke-width="1.5" fill="#fde8e8"/><circle cx="24" cy="10" r="4" stroke="#C0272D" stroke-width="1.5" fill="#fde8e8"/><path d="M18 28 C18 28 14 25 14 22 a2 2 0 0 1 4-0.5 2 2 0 0 1 4 0.5 c0 3-4 6-4 6z" fill="#C0272D" opacity="0.4"/></svg>
+          <span class="ml">Flowers for You</span><span class="ms">with love and sweet words</span>
+        </div>
+        <div class="mc" data-reveal onclick="goTo('page-song')">
+          <svg width="100" height="100" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="14" fill="#fde8e8" stroke="#C0272D" stroke-width="1.8"/><polygon points="14,12 27,18 14,25" fill="#C0272D"/><path d="M9 29 C9 29 7 26 9 23 a2 2 0 0 1 3 1 2 2 0 0 1 3-1 c2 3-3 6-3 6z" fill="#C0272D" opacity="0.5"/></svg>
+          <span class="ml">Sheki</span><span class="ms">this song reminds me of you</span>
+        </div>
+        <div class="mc full" data-reveal onclick="goTo('page-message')">
+          <svg width="100" height="100" viewBox="0 0 36 36" fill="none"><path d="M5 9 Q5 5 9 5 L27 5 Q31 5 31 9 L31 27 Q31 31 27 31 L9 31 Q5 31 5 27Z" fill="#fde8e8" stroke="#C0272D" stroke-width="1.8"/><path d="M10 13 L26 13" stroke="#C0272D" stroke-width="1.3" stroke-linecap="round"/><path d="M10 18 L26 18" stroke="#C0272D" stroke-width="1.3" stroke-linecap="round"/><path d="M10 23 L19 23" stroke="#C0272D" stroke-width="1.3" stroke-linecap="round"/><path d="M27 25 C27 25 22 22 22 19 a2.5 2.5 0 0 1 5-0.5 2.5 2.5 0 0 1 5 0.5 c0 3-5 6-5 6z" fill="#C0272D" opacity="0.6"/></svg>
+          <span class="ml">Message For You</span><span class="ms">from my heart</span>
+        </div>
+      </div>
+    </div>
+    <div class="frame-footer" data-reveal>
+      <span class="frame-title">A Gift For You</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 4 MEMORIES -->
+<div class="page frame-page" id="page-memories">
+  <div class="frame-box">
+    <div class="hc tl"></div><div class="hc tr"></div><div class="hc bl"></div><div class="hc br"></div>
+    <div class="frame-content">
+      <div class="hearts-row" data-reveal style="margin-bottom:14px">
+        <svg width="10" height="9" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="18" height="16" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="10" height="9" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+      </div>
+      <div class="polaroid-grid">
+        <div class="polaroid" data-reveal><div class="pol-img"><img src="photos/1.jpg"/></div><div class="pol-label">😭😂😂</div></div>
+        <div class="polaroid" data-reveal><div class="pol-img"><img src="photos/2.jpeg"/></div><div class="pol-label">😊😊😊</div></div>
+        <div class="polaroid" data-reveal><div class="pol-img"><img src="photos/3.jpeg"/></div><div class="pol-label">🤭🤭🤭 Belle depuis longtemps❤️</div></div>
+        <div class="polaroid" data-reveal><div class="pol-img"><img src="photos/4.jpeg"/></div><div class="pol-label">🥰🥰🥰</div></div>
+        <div class="polaroid" data-reveal><div class="pol-img"><img src="photos/5.jpeg"/></div><div class="pol-label">Madammmmmm🤩😍</div></div>
+        <div class="polaroid" data-reveal><div class="pol-img"><img src="photos/6.jpeg"/></div><div class="pol-label">💟 ❣️</div></div>
+        <div class="polaroid" data-reveal><div class="pol-img"><img src="photos/7.jpeg"/></div><div class="pol-label">Beauty, brains and a heart of gold🤩😍</div></div>
+        <div class="polaroid" data-reveal><div class="pol-img"><img src="photos/8.jpeg"/></div><div class="pol-label">God's own🥰</div></div>
+        <div class="polaroid" data-reveal><div class="pol-img"><img src="photos/9.jpeg"/></div><div class="pol-label">Ma meilleur rencontre❤️❤️</div></div>
+        <div class="polaroid" data-reveal><div class="pol-img"><img src="photos/10.jpg"/></div><div class="pol-label">See how far we've come 🥺😂😂 </div></div>
+      </div>
+    </div>
+    <div class="frame-footer" data-reveal>
+      <span class="frame-title">Captured Memories❤️</span>
+      <button class="return-btn" onclick="goTo('page-menu')">Return</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 5 REASONS -->
+<div class="page frame-page" id="page-reasons">
+  <div class="frame-box">
+    <div class="hc tl"></div><div class="hc tr"></div><div class="hc bl"></div><div class="hc br"></div>
+    <div class="frame-content">
+      <div class="hearts-row" data-reveal style="margin-bottom:18px">
+        <svg width="10" height="9" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="18" height="16" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="10" height="9" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+      </div>
+      <div class="rlist">
+        <!-- EDIT: Replace each reason -->
+        <div class="ritem" data-reveal><svg width="16" height="15" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z"/></svg><p> Your Selfless Heart: You love without expecting anything back. You put everyone else first, always. Even when you have nothing left, you still find a way to give more. Your heart is pure gold and I see it every single day.</p></div>
+        <div class="ritem" data-reveal><svg width="16" height="15" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z"/></svg><p>You Always Carry My Matter for Head: You remember my dreams when I forget them. You check up on me. You pray for me. You worry about me like I'm your own. Nobody in this world cares for me the way you do.</p></div>
+        <div class="ritem" data-reveal><svg width="16" height="15" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z"/></svg><p>You Push Me to Be Better: You never let me settle for less. When I want to give up, you push me forward. When I doubt myself, you believe for both of us until I believe again. You make me want to be the best version of myself.</p></div>
+        <div class="ritem" data-reveal><svg width="16" height="15" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z"/></svg><p>You Never Give Up: Life throws things at you, and you still stand. You fight. You trust God. You keep going. Your strength inspires me every day. You teach me that quitting is never an option</p></div>
+        <div class="ritem" data-reveal><svg width="16" height="15" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z"/></svg><p>You Stay: Through the good and the bad, through the laughter and the tears, through every season you stay. You came around and stuck around like it's a forever thing. And that's exactly what it is. Forever</p></div>
+      </div>
+    </div>
+    <div class="frame-footer" data-reveal>
+      <span class="frame-title">Reasons I Love You Skeki❤️</span>
+      <button class="return-btn" onclick="goTo('page-menu')">Return</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 6 SONG -->
+<div class="page frame-page" id="page-song">
+  <div class="frame-box">
+    <div class="hc tl"></div><div class="hc tr"></div><div class="hc bl"></div><div class="hc br"></div>
+    <div class="frame-content">
+      <div class="hearts-row" data-reveal style="margin-bottom:16px">
+        <svg width="10" height="9" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="18" height="16" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="10" height="9" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+      </div>
+      <div class="song-card" data-reveal>
+        <span class="seyebrow">Now Playing</span>
+        <!-- EDIT song name & artist -->
+        <div class="sname">"Umbrella" — Rihanna</div>
+        <p class="shint">This song is what you have been all these years to me</p>
+        <!-- EDIT: Replace src with your YouTube embed URL -->
+       <video class="yt" controls controlsList="nodownload">
+        <source src="videos/umbrella.mp4" type="video/mp4">
+      </video>
+        <button class="sec-btn" id="sec-btn" onclick="toggleSecret()">
+          <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z"/></svg>
+          a secret message
+          <svg class="arr" width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="#C0272D" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <!-- EDIT secret message -->
+        <div class="sec-body" id="sec-body">Just like in Umbrella, you’re the friend who never walks away when the rain starts. Through the good days and the difficult ones, you’ve always been there for me, and that’s something I’ll always be grateful for.</div>
+      </div>
+    </div>
+    <div class="frame-footer" data-reveal>
+      <span class="frame-title">Umbrella❤️</span>
+      <button class="return-btn" onclick="goTo('page-menu')">Return</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 7 MESSAGE -->
+<div class="page frame-page" id="page-message">
+  <div class="frame-box">
+    <div class="hc tl"></div><div class="hc tr"></div><div class="hc bl"></div><div class="hc br"></div>
+    <div class="frame-content">
+      <div class="hearts-row" data-reveal style="margin-bottom:16px">
+        <svg width="10" height="9" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="18" height="16" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="10" height="9" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+      </div>
+      <div class="letter" data-reveal>
+        <!-- EDIT friend's name -->
+        <span class="ldear">My Dearest Sheki, my love❤️,</span>
+        <!-- EDIT your message -->
+        <div class="lbody">I've been thinking about us lately. About how it all began. And I find myself smiling, remembering that day in Form One when two strangers became something so much more.
+I didn't know it then, but meeting you was la meilleure rencontre de ma vie . Those words still hold true today, maybe even more than they ever have. Some people come into your life for a season, but you? You came around and you stuck around like it was always meant to be a forever thing. And I believe it was.
+Do you remember who we were back then? Just two young girls navigating the chaos of high school, not knowing that we were building a foundation that would hold us through everything life would throw our way. Through every tear, every laugh, every victory, every heartbreak , you've been there!!🥹.
+
+One of the most beautiful things about you is how you love. You are selfless in a way that amazes me every single day. You put everyone else's needs before your own without a second thought. You give and you give until there's nothing left, and then you find a way to give some more. That's just who you are. You carry the weight of the people you love like it's your purpose. But I see you, Sheki. I see the sacrifices you make quietly, the tears you cry alone, the burdens you carry so that others don't have to. Your heart is so big, and I thank God every day that I am one of the lucky ones you let into it.
+
+And me? You always carry my matter for head. You always have. You hold my dreams like they're your own. You guard my heart when I'm too careless with it. You speak truth into my life even when it's hard to hear. You push me, challenge me, and refuse to let me settle for less😂. You see a version of me that I sometimes can't see myself, and you love me until I grow into her. You make me want to be better, not because you demand it, but because your belief in me leaves no room for giving up.
+
+There is no giving up in your dictionary. I've watched you face things that would break most people, and still, you stand. Still, you fight. Still, you trust God. Your strength is something I admire deeply, but it's your tenderness that moves me most. The way you love God, the way you love people, the way you love me it's pure🥹❤️. It's rare. It's everything.
+
+As you step into this new age, my heart is full of prayers for you. More than anything, I pray that your walk with God goes to the next level. That you encounter Him in ways you never have before. That you feel His presence in the quiet moments and see His hand in every detail of your life. I pray that His favor surrounds you like a shield at home, at work, in your relationships, in your dreams. I pray that you don't just seek His favor, but that you live in it, breathe in it, walk in it every single day.
+
+I pray for your happiness, your peace, your joy. I pray that this new chapter brings you everything you've been hoping for and more. You deserve the world, Sheki. And I hope this year gives you a glimpse of just how much you are loved by God, by me, and by everyone whose life you have touched.
+
+Thank you for being born. Thank you for being you. Thank you for staying. Thank you for loving me the way you do.
+
+Happy birthday, my person. I love you more than words can say.
+
+
+        </div>
+        <!-- EDIT your name -->
+        <span class="lfrom">Forever and always, Your best friend ❤️</span>
+      </div>
+    </div>
+    <div class="frame-footer" data-reveal>
+      <span class="frame-title">Message For You❤️</span>
+      <button class="return-btn" onclick="goTo('page-menu')">Return</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 8 FLOWERS -->
+<div class="page frame-page" id="page-flowers">
+  <div class="frame-box">
+    <div class="hc tl"></div><div class="hc tr"></div><div class="hc bl"></div><div class="hc br"></div>
+    <div class="frame-content">
+      <div class="hearts-row" data-reveal style="margin-bottom:14px">
+        <svg width="10" height="9" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="18" height="16" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="14" height="13" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+        <svg width="10" height="9" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>
+      </div>
+      <div class="flower-layout">
+        <div class="flower-notes-left">
+          <!-- EDIT notes -->
+          <div class="flower-note" data-reveal><strong>You are sunshine</strong>You make every day more beautiful simply by being in it.</div>
+          <div class="flower-note" data-reveal><strong>You are brave</strong>You are so much stronger than you give yourself credit for.</div>
+          <div class="flower-note" data-reveal><strong>You are kind</strong>Your warmth touches everyone around you without you even knowing.</div>
+        </div>
+        <div class="flower-center-col" data-reveal>
+          <svg class="flower-big-svg" viewBox="0 0 170 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M85 205 Q83 178 79 155" stroke="#5a7a52" stroke-width="2.8"/>
+            <path d="M85 205 Q87 180 91 158" stroke="#5a7a52" stroke-width="2.8"/>
+            <path d="M85 205 Q80 174 68 148" stroke="#5a7a52" stroke-width="2.8"/>
+            <path d="M85 205 Q90 174 102 148" stroke="#5a7a52" stroke-width="2.8"/>
+            <path d="M85 205 Q85 172 85 148" stroke="#5a7a52" stroke-width="2.8"/>
+            <path d="M85 205 Q76 170 58 145" stroke="#5a7a52" stroke-width="2.2"/>
+            <path d="M85 205 Q94 170 112 145" stroke="#5a7a52" stroke-width="2.2"/>
+            <path d="M81 175 Q68 166 66 156 Q76 158 81 170Z" fill="#5a7a52" opacity="0.7"/>
+            <path d="M89 178 Q102 169 104 159 Q94 161 89 174Z" fill="#5a7a52" opacity="0.7"/>
+            <path d="M77 162 Q64 153 63 143 Q73 145 77 158Z" fill="#5a7a52" opacity="0.6"/>
+            <path d="M93 165 Q106 156 107 146 Q97 148 93 161Z" fill="#5a7a52" opacity="0.6"/>
+            <path d="M85 148 C85 148 72 138 74 122 Q78 114 82 122 Q85 112 88 122 Q92 114 96 122 C98 138 85 148 85 148Z" fill="#C0272D" opacity="0.95"/>
+            <path d="M82 148 Q79 138 80 126" stroke="#a01e23" stroke-width="0.8" opacity="0.4"/>
+            <path d="M88 148 Q91 138 90 126" stroke="#a01e23" stroke-width="0.8" opacity="0.4"/>
+            <path d="M68 148 C68 148 55 138 57 122 Q61 114 65 122 Q68 112 71 122 Q75 114 79 122 C81 138 68 148 68 148Z" fill="#e86060" opacity="0.9"/>
+            <path d="M102 148 C102 148 89 138 91 122 Q95 114 99 122 Q102 112 105 122 Q109 114 113 122 C115 138 102 148 102 148Z" fill="#C0272D" opacity="0.9"/>
+            <path d="M58 145 C58 145 45 135 47 119 Q51 111 55 119 Q58 109 61 119 Q65 111 69 119 C71 135 58 145 58 145Z" fill="#f5a0a0" opacity="0.85"/>
+            <path d="M112 145 C112 145 99 135 101 119 Q105 111 109 119 Q112 109 115 119 Q119 111 123 119 C125 135 112 145 112 145Z" fill="#e07070" opacity="0.85"/>
+            <path d="M79 155 C79 155 66 145 68 129 Q72 121 76 129 Q79 119 82 129 Q86 121 90 129 C92 145 79 155 79 155Z" fill="#f5b0b0" opacity="0.8"/>
+            <path d="M91 158 C91 158 78 148 80 132 Q84 124 88 132 Q91 122 94 132 Q98 124 102 132 C104 148 91 158 91 158Z" fill="#d05858" opacity="0.8"/>
+            <path d="M62 168 Q85 180 108 168" stroke="#C0272D" stroke-width="2.2" fill="none"/>
+            <path d="M67 174 Q85 186 103 174" stroke="#C0272D" stroke-width="1.4" fill="none" opacity="0.5"/>
+            <path d="M68 169 Q59 157 64 152 Q72 155 70 165Z" fill="#C0272D" opacity="0.65"/>
+            <path d="M102 169 Q111 157 106 152 Q98 155 100 165Z" fill="#C0272D" opacity="0.65"/>
+            <path d="M63 205 Q61 190 59 178 Q72 174 85 175 Q98 174 111 178 Q109 190 107 205Z" fill="#fde8e8" stroke="#C0272D" stroke-width="1.8"/>
+            <path d="M80 198 C80 198 75 194 75 191 a3 3 0 0 1 5-1 3 3 0 0 1 5 1 c0 3-5 7-5 7z" fill="#C0272D" opacity="0.45"/>
+            <path d="M92 194 C92 194 88 191 88 188 a2.5 2.5 0 0 1 4-0.8 2.5 2.5 0 0 1 4 0.8 c0 3-4 6-4 6z" fill="#C0272D" opacity="0.4"/>
+            <path d="M72 192 C72 192 68 189 68 186 a2 2 0 0 1 4-0.5 2 2 0 0 1 4 0.5 c0 2.5-4 6-4 6z" fill="#C0272D" opacity="0.35"/>
+          </svg>
+          <!-- EDIT flower name -->
+          <div class="flower-name-big">Tulips</div>
+          <div class="flower-caption">Just you</div>
+        </div>
+        <div class="flower-notes-right">
+          <!-- EDIT notes -->
+          <div class="flower-note" data-reveal><strong>You are loved</strong>Thank you for always being my safe place, my constant.</div>
+          <div class="flower-note" data-reveal><strong>You are magic</strong>The world is so much richer and warmer with you in it.</div>
+          <div class="flower-note" data-reveal><strong>You are enough</strong>You deserve every wonderful thing coming your way this year.</div>
+        </div>
+      </div>
+    </div>
+    <div class="frame-footer" data-reveal>
+      <span class="frame-title">These Are For You❤️</span>
+      <button class="return-btn" onclick="goTo('page-menu')">Return</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const layer=document.getElementById('hearts-layer');
+  const sizes=[12,16,20,10,14,18,22,8,24,11];
+  for(let i=0;i<35;i++){
+    const d=document.createElement('div');d.className='fh';
+    const s=sizes[i%sizes.length];
+    d.style.left=(Math.random()*100)+'vw';
+    d.style.animationDuration=(9+Math.random()*16)+'s';
+    d.style.animationDelay=(Math.random()*14)+'s';
+    d.innerHTML=`<svg width="${s}" height="${s}" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z"/></svg>`;
+    layer.appendChild(d);
+  }
+})();
+
+function scatterHearts(id){
+  const c=document.getElementById(id);if(!c)return;
+  const sizes=[18,12,24,10,16,20,14,8,22];
+  for(let i=0;i<18;i++){
+    const d=document.createElement('div');d.className='sh';
+    const s=sizes[i%sizes.length];
+    d.style.left=(Math.random()*100)+'%';d.style.top=(Math.random()*100)+'%';
+    d.style.transform=`rotate(${(Math.random()-0.5)*40}deg)`;
+    d.innerHTML=`<svg width="${s}" height="${s}" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>`;
+    c.appendChild(d);
+  }
+}
+scatterHearts('sh-welcome');scatterHearts('sh-menu');
+
+function revealPage(pageEl){
+  const items=pageEl.querySelectorAll('[data-reveal]');
+  items.forEach(el=>el.classList.remove('revealed'));
+  items.forEach((el,i)=>{setTimeout(()=>el.classList.add('revealed'),300+i*380)});
+}
+
+function goTo(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active','page-enter'));
+  const t=document.getElementById(id);
+  t.classList.add('active');void t.offsetWidth;t.classList.add('page-enter');
+  window.scrollTo({top:0,behavior:'smooth'});revealPage(t);
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const first=document.querySelector('.page.active');if(first)revealPage(first);
+});
+
+function toggleSecret(){
+  const b=document.getElementById('sec-body');const btn=document.getElementById('sec-btn');
+  const open=b.style.display==='block';
+  b.style.display=open?'none':'block';btn.classList.toggle('open',!open);
+}
+
+function burst(e){
+  for(let i=0;i<22;i++){
+    const s=document.createElement('div');s.className='sparkle';
+    const sz=8+Math.random()*16;
+    s.style.left=(e.clientX+(Math.random()-0.5)*140)+'px';
+    s.style.top=(e.clientY+(Math.random()-0.5)*140)+'px';
+    s.style.animationDelay=(Math.random()*0.35)+'s';
+    s.style.position='fixed';s.style.pointerEvents='none';s.style.zIndex=9999;
+    s.innerHTML=`<svg width="${sz}" height="${sz}" viewBox="0 0 20 18"><path d="M10 16S1 10 1 5a4 4 0 0 1 9-1 4 4 0 0 1 9 1c0 5-9 11-9 11z" fill="#C0272D"/></svg>`;
+    document.body.appendChild(s);s.addEventListener('animationend',()=>s.remove());
+  }
+}
+</script>
+</body>
+</html>
